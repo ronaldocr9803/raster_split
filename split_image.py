@@ -30,6 +30,7 @@ def process_one_image(img_path, shfPath):
     # img_path = "./W05_202003281250_RI_RSK_RSKA003603_RGB_2.tif"
     # shfPath = "./output1/with-shapely.shp"
     # shfPath = "./W05_202003281250_RI_RSK_RSKA003603_RGB/W05_202003281250_RI_RSK_RSKA003603_RGB.shp"
+    print("Process {}".format(img_path.split("/")[-1]))
     big_image_name = img_path.split("/")[-1].split("_")[-3]
     idx_img = img_path.split("/")[-1][:-4][-1]
     # import ipdb; ipdb.set_trace()
@@ -65,12 +66,12 @@ def process_one_image(img_path, shfPath):
     for i in Y_points: #index row
         for j in X_points: #index col
             img_name = "Img_{}_{}_r{:03d}_c{:03d}".format(big_image_name,idx_img,i,j)
-            import ipdb; ipdb.set_trace()
+            # import ipdb; ipdb.set_trace()
             if X_points.index(j) == len(X_points)-1: #j is the last point 
                 if Y_points.index(i) == len(Y_points)-1: #i is the last point
                     split = rgb1[i:, j:] 
-                    print("Image.r%03d_c%03d"%(i,j))
-                    print(split.shape)
+                    # print("Image.r%03d_c%03d"%(i,j))
+                    # print(split.shape)
                     im_arr_bgr = cv2.cvtColor(split, cv2.COLOR_RGB2BGR)
                     # img_name = "Img_r%03d_c%03d"%(i,j)
                     cv2.imwrite('./images/{}.png'.format(img_name), im_arr_bgr)
@@ -79,8 +80,8 @@ def process_one_image(img_path, shfPath):
                     continue
                 else:
                     split = rgb1[i:i+split_height, j:]
-                    print("Image.r%03d_c%03d"%(i,j))
-                    print(split.shape)
+                    # print("Image.r%03d_c%03d"%(i,j))
+                    # print(split.shape)
                     im_arr_bgr = cv2.cvtColor(split, cv2.COLOR_RGB2BGR)
                     # img_name = "Img_r%03d_c%03d"%(i,j)
                     cv2.imwrite('./images/{}.png'.format(img_name), im_arr_bgr)
@@ -89,8 +90,8 @@ def process_one_image(img_path, shfPath):
                     continue
             elif Y_points.index(i) == len(Y_points)-1:
                 split = rgb1[i:, j:j+split_width] 
-                print("Image.r%03d_c%03d"%(i,j))
-                print(split.shape)
+                # print("Image.r%03d_c%03d"%(i,j))
+                # print(split.shape)
                 im_arr_bgr = cv2.cvtColor(split, cv2.COLOR_RGB2BGR)
                 # img_name = "Img_r%03d_c%03d"%(i,j)
                 cv2.imwrite('./images/{}.png'.format(img_name), im_arr_bgr)
@@ -99,14 +100,16 @@ def process_one_image(img_path, shfPath):
                 continue
             else:            
                 split = rgb1[i:i+split_height, j:j+split_width]
-                print("Image.r%03d_c%03d"%(i,j))
-                print(split.shape)
+                # print("Image.r%03d_c%03d"%(i,j))
+                # print(split.shape)
                 im_arr_bgr = cv2.cvtColor(split, cv2.COLOR_RGB2BGR)
                 # img_name = "Img_r%03d_c%03d"%(i,j)
                 cv2.imwrite('./images/{}.png'.format(img_name), im_arr_bgr)
                 get_bbox_image(rgb1, img_name,dataset,df_bounds, lst_idx_inside_img,X_points, Y_points, i, j)
                 count += 1
+    print("Done image {}".format(img_path.split("/")[-1]))
     print("splitted into {} images".format(count))  
+    print("-------------------------------------------------------------")
 
 
 if __name__ == "__main__":
