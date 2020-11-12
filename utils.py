@@ -50,7 +50,7 @@ def get_bbox_image(img_arr,name, dataset,df_bounds, bboxes,X_points, Y_points, s
     test_arr = img_arr[start_row:start_row+256,start_col:start_col+256]
     im_arr_bgr = cv2.cvtColor(test_arr, cv2.COLOR_RGB2BGR)
     lst_obj_inside_img = add_bbox_img(dataset,df_bounds, im_arr_bgr, bboxes, start_row,start_col)
-    f= open("./output2.1txt/{}.txt".format(name),"w+")
+    f= open("./labels/{}.txt".format(name),"w+")
     for i in lst_obj_inside_img:
         row_min, col_min = cvt_rowmin_colmin(dataset,df_bounds, i, X_points.index(start_col), Y_points.index(start_row))
         row_max, col_max = cvt_rowmax_colmax(dataset,df_bounds, i, X_points.index(start_col), Y_points.index(start_row))
